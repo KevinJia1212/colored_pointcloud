@@ -1,0 +1,20 @@
+<launch>
+  <!-- <include file="$(find pointgrey_camera_driver)/launch/camera_161.launch" /> -->
+  
+  <arg name="color_distance" default="1.2" />
+  <arg name="show_colored_cloud" default="true" />
+  <arg name="save_data" default="false" />
+  
+  <node pkg="colored_pointcloud" type="colored_pointcloud_node161" name="colored_pointcloud_node" output="screen">
+    <param name="camera_topic" type="str" value="/camera_front/image_color" />
+    <param name="lidar_topic" type="str" value="/rslidar_points" />
+    <param name="calib_file_path" type="str" value="$(find colored_pointcloud)/config" />
+    <param name="file_name" type="str" value="calib_result.yaml" />
+    <param name="color_distance" type="double" value="$(arg color_distance)" />
+    <param name="show_colored_cloud" type="bool" value="$(arg show_colored_cloud)" />
+    <param name="save_data" type="bool" value="$(arg save_data)" />
+  </node>
+
+  <node pkg="rviz" name="rviz" type="rviz"  args="-d $(find colored_pointcloud)/rviz/colored_pointcloud161.rviz">
+  </node>
+</launch>
